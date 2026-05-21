@@ -1,5 +1,5 @@
 #### v2.3-nexploit (Nexploit — ZADO-OS Roger OS)
-- Rebrand: **Nexploit** (CLI `nexploit`) — repo [zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)
+- Rebrand: **Nexploit** (CLI `nexploit`) — repo [zado-os/nexploit](https://github.com/zado-os/nexploit)
 - Launcher: `nexploit.py` · install path `/usr/share/nexploit`
 
 #### v2.2-vulnnader

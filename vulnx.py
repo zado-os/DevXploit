@@ -5,7 +5,7 @@ from __future__ import (absolute_import, division, print_function)
 
 """
 Nexploit — CMS Detector, Exploits Scan & Shell Injector.
-ZADO-OS Roger OS Edition · https://github.com/zado-os/vulnx1v
+ZADO-OS Roger OS Edition · https://github.com/zado-os/nexploit
 Fork of VulnX by Anouar Ben Saad. See LICENSE.
 """
 

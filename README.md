@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/zado-os/vulnx1v"><img src="https://i.ibb.co/ZxxFqxQ/vxv2.png" alt="Nexploit"></a>
+  <a href="https://github.com/zado-os/nexploit"><img src="https://i.ibb.co/ZxxFqxQ/vxv2.png" alt="Nexploit"></a>
   <br>
   <strong>Nexploit</strong> — ZADO-OS Roger OS Edition
   <br>
@@ -19,30 +19,32 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zado-os/vulnx1v">
-    <img src="https://img.shields.io/github/stars/zado-os/vulnx1v?style=flat-square" alt="stars">
+  <a href="https://github.com/zado-os/nexploit">
+    <img src="https://img.shields.io/github/stars/zado-os/nexploit?style=flat-square" alt="stars">
   </a>
-  <a href="https://github.com/zado-os/vulnx1v/issues">
-    <img src="https://img.shields.io/github/issues/zado-os/vulnx1v?style=flat-square" alt="issues">
+  <a href="https://github.com/zado-os/nexploit/issues">
+    <img src="https://img.shields.io/github/issues/zado-os/nexploit?style=flat-square" alt="issues">
   </a>
 </p>
 
 ![Screenshot from 2019-06-19 05-22-04](https://user-images.githubusercontent.com/23563528/59736664-7c2fed00-9252-11e9-936d-53ea02628711.png)
 
 <p align="center">
-  <a href="https://github.com/zado-os/vulnx1v/archive/refs/heads/main.zip">Download ZIP</a> •
-  <a href="https://github.com/zado-os/vulnx1v">Repository</a> •
-  <a href="https://github.com/zado-os/vulnx1v/issues">Issues</a> •
+  <a href="https://github.com/zado-os/nexploit/archive/refs/heads/main.zip">Download ZIP</a> •
+  <a href="https://github.com/zado-os/nexploit">Repository</a> •
+  <a href="https://github.com/zado-os/nexploit/issues">Issues</a> •
   <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage">Upstream Wiki</a> •
 </p>
 
-**Nexploit** ([zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)) is an intelligent auto shell injector and CMS scanner. It detects the CMS, runs **95 Exploits Scan** modules with `[n/total]` progress, validates shells, and exports logs.
+**Nexploit** ([zado-os/nexploit](https://github.com/zado-os/nexploit)) is an intelligent auto shell injector and CMS scanner. It detects the CMS, runs **95 Exploits Scan** modules with `[n/total]` progress, validates shells, and exports logs.
 
 Maintained by **ZADO-OS (Roger OS)**. Based on [anouarbensaad/vulnx](https://github.com/anouarbensaad/vulnx) — same spirit, new name, sharper chains.
 
+**Repository:** [github.com/zado-os/nexploit](https://github.com/zado-os/nexploit) (rename from `vulnx1v` in GitHub Settings → General → Repository name).
+
 ```bash
-git clone https://github.com/zado-os/vulnx1v.git
-cd vulnx1v
+git clone https://github.com/zado-os/nexploit.git
+cd nexploit
 python3 -m pip install -r requirements.txt --break-system-packages   # Kali/Debian
 chmod +x nexploit
 ./nexploit -u https://example.com --exploit-scan -o ./logs
@@ -117,7 +119,7 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 ### _🕷️ Exploits Scan — Nexploit (95 modules)_
 <h1 align="center">
-<a href="https://github.com/zado-os/vulnx1v"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
+<a href="https://github.com/zado-os/nexploit"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
 </h1>
 
 > كل وحدة تُختبر عبر HTTP فعلي: رفع/طلب ثم التحقق من `Vuln X` في الاستجابة.  
@@ -186,7 +188,7 @@ Nexploit interactive mode (`nexploit --it`).
 
 
 ### _🕷️ Available command line options_
-[Upstream VulnX Wiki](https://github.com/anouarbensaad/vulnx/wiki/Usage) · [zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)
+[Upstream VulnX Wiki](https://github.com/anouarbensaad/vulnx/wiki/Usage) · [zado-os/nexploit](https://github.com/zado-os/nexploit)
 
 Run `python nexploit.py -h` or `nexploit -h` after install.
 
@@ -248,8 +250,8 @@ pip3 install -r requirements.txt
 VulnX in DOCKER !!.
 
 ```bash
-$ git clone https://github.com/zado-os/vulnx1v.git
-$ cd vulnx1v
+$ git clone https://github.com/zado-os/nexploit.git
+$ cd nexploit
 $ docker build -t nexploit ./docker/
 $ docker run -it --name nexploit nexploit:latest -u http://example.com
 ```
@@ -273,8 +275,8 @@ The image defines a mount point at `/vulnx` (see `docker/Dockerfile`). Map a hos
 ### _🕷️ Kali Linux (بدون install.sh)_
 
 ```bash
-git clone https://github.com/zado-os/vulnx1v.git
-cd vulnx1v
+git clone https://github.com/zado-os/nexploit.git
+cd nexploit
 apt install -y python3 python3-pip
 python3 -m pip install -r requirements.txt --break-system-packages
 chmod +x nexploit
@@ -290,8 +292,8 @@ chmod +x nexploit
 ### _🕷️ Install Nexploit on Ubuntu / Kali (نظامي)_
 
 ```bash
-git clone https://github.com/zado-os/vulnx1v.git
-cd vulnx1v
+git clone https://github.com/zado-os/nexploit.git
+cd nexploit
 sudo chmod +x install.sh
 sudo ./install.sh
 ```
@@ -317,8 +319,8 @@ chmod +x nexploit && ./nexploit -u http://example.com -x
 ```bash
 $ pkg update
 $ pkg install -y git python
-$ git clone https://github.com/zado-os/vulnx1v.git
-$ cd vulnx1v
+$ git clone https://github.com/zado-os/nexploit.git
+$ cd nexploit
 $ chmod +x install.sh
 $ ./install.sh
 ```
@@ -329,13 +331,13 @@ Run as root in Termux when prompted by the installer.
 
 ### _🕷️ Install vulnx in Windows_
 
-- [Download ZIP](https://github.com/zado-os/vulnx1v/archive/refs/heads/main.zip)
+- [Download ZIP](https://github.com/zado-os/nexploit/archive/refs/heads/main.zip)
 - Install [Python 3](https://www.python.org/downloads/)
-- Unzip to `C:\vulnx1v`
+- Unzip to `C:\nexploit`
 - Open **cmd** or PowerShell:
 
 ```
-> cd C:\vulnx1v
+> cd C:\nexploit
 > pip install -r requirements.txt
 > python nexploit.py -u http://example.com --exploit-scan
 ```
@@ -404,7 +406,7 @@ nexploit -u http://example.com -p 80
 -------------------------------------
 
 ### _🕷️ Versions_
-- **v2.3-nexploit** — Rebrand **Nexploit**, 95 modules, CLI `nexploit`, [zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)
+- **v2.3-nexploit** — Rebrand **Nexploit**, 95 modules, CLI `nexploit`, [zado-os/nexploit](https://github.com/zado-os/nexploit)
 - **v2.1-zado** — ZADO-OS Roger OS: Exploits Scan chains, Drupal/Lokomedia/OpenCart packs, log export
 - [v2.0](https://github.com/anouarbensaad/vulnx/releases) — OS / web server detection (see `CHANGELOG.md`)
 - [v1.9](https://github.com/anouarbensaad/vulnx/releases/tag/v1.9)
