@@ -4,7 +4,10 @@ import sys
 import time
 import os
 import re
-import readline
+try:
+    import readline
+except ImportError:
+    readline = None
 import glob
 import subprocess
 from common.colors import end, W, R, B, bannerblue2

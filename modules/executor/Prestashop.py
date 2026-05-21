@@ -25,9 +25,13 @@ class Prestashop(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
+    def exploit(self, output_dir=None):
+        from modules.exploits.exploit_scanner import run_exploit_scan, PS_EXPLOIT_CHAIN
         ps = PSExploits(self.url, self.headers)
-        return ps.psexploits()
+        return run_exploit_scan(
+            "PrestaShop", ps, PS_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         whg = GatherHost(self.url,self.headers)

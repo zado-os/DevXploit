@@ -7,7 +7,7 @@ off="\e[0m"
 
 #vulnx install function for Android. termux
 function banner(){
-    echo -e "===== VULNX INSTALL ====="
+    echo -e "===== Nexploit INSTALL — ZADO-OS Roger OS Edition ====="
 }
 
 function termuxOS() {
@@ -46,9 +46,9 @@ function termuxOS() {
     if [ -d "/data/data/com.termux/files/usr/share/vulnx" ] ;
     then
         echo -e "$red [$green+$red]$off Tool successfully installed and will start in 5s!";
-        echo -e "$red [$green+$red]$off You can execute tool by typing vulnx"
+        echo -e "$red [$green+$red]$off Run: nexploit  (alias: vulnx)"
         sleep 5;
-        vulnx
+        nexploit 2>/dev/null || vulnx 2>/dev/null || python3 nexploit.py
     else
         echo -e "$red [$green✘$red]$off Tool Cannot Be Installed On Your System! Use It As Portable !";
         exit
@@ -84,28 +84,33 @@ function debianOS(){
     echo -e "$red [$green+$red]$off Installing ...";
     echo -e "$red [$green+$red]$off Creating Symbolic Link ...";
     echo -e "#!/bin/bash
-    python3 /usr/share/vulnx/vulnx.py" '${1+"$@"}' > "vulnx";
+    python3 /usr/share/nexploit/nexploit.py" '${1+"$@"}' > "nexploit";
+    chmod +x "nexploit";
+    echo -e "#!/bin/bash
+    python3 /usr/share/nexploit/vulnx.py" '${1+"$@"}' > "vulnx";
     chmod +x "vulnx";
-    if [[ ! -d "/usr/share/vulnx" ]];then
-    sudo mkdir "/usr/share/vulnx"
+    if [[ ! -d "/usr/share/nexploit" ]];then
+    sudo mkdir "/usr/share/nexploit"
     fi
-    sudo cp "install.sh" "/usr/share/vulnx"
-    sudo cp "update.sh" "/usr/share/vulnx"
-    sudo cp -r "./common" "/usr/share/vulnx/"
-    sudo cp -r "./modules" "/usr/share/vulnx/"
-    sudo cp -r "./shell" "/usr/share/vulnx/"
-    sudo chmod +x /usr/share/vulnx/update.sh
-    sudo cp "vulnx.py" "/usr/share/vulnx"
+    sudo cp "install.sh" "/usr/share/nexploit"
+    sudo cp "update.sh" "/usr/share/nexploit"
+    sudo cp "nexploit.py" "/usr/share/nexploit"
+    sudo cp -r "./common" "/usr/share/nexploit/"
+    sudo cp -r "./modules" "/usr/share/nexploit/"
+    sudo cp -r "./shell" "/usr/share/nexploit/"
+    sudo chmod +x /usr/share/nexploit/update.sh
+    sudo cp "vulnx.py" "/usr/share/nexploit"
     sudo cp "bin/vulnxicon.png" "/usr/share/icons"
     sudo cp "bin/vulnx.desktop" "/usr/share/applications"
+    sudo cp "nexploit" "/usr/local/bin/"
     sudo cp "vulnx" "/usr/local/bin/"
-    rm "vulnx";
-    if [ -d "/usr/share/vulnx" ] ;
+    rm "nexploit" "vulnx";
+    if [ -d "/usr/share/nexploit" ] ;
     then
         echo -e "$red [$green+$red]$off Tool Successfully Installed And Will Start In 5s!";
-        echo -e "$red [$green+$red]$off You can execute tool by typing vulnx"
+        echo -e "$red [$green+$red]$off Run: nexploit  (alias: vulnx)"
         sleep 5;
-        vulnx
+        nexploit 2>/dev/null || vulnx 2>/dev/null || python3 nexploit.py
     else
         echo -e "$red [$green✘$red]$off Tool Cannot Be Installed On Your System! Use It As Portable !";
         exit

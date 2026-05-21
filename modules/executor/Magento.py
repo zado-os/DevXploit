@@ -23,8 +23,14 @@ class Magento(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
-        return print('no exploits found.')
+    def exploit(self, output_dir=None):
+        from modules.exploits.magento_exploits import MGExploits
+        from modules.exploits.exploit_scanner import run_exploit_scan, MAGENTO_EXPLOIT_CHAIN
+        mg = MGExploits(self.url, self.headers)
+        return run_exploit_scan(
+            "Magento", mg, MAGENTO_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         web = GatherHost(self.url,self.headers)

@@ -24,8 +24,9 @@ class Uknown(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
-        return print(' This is uknown cms error while scanning exploits from cms.')
+    def exploit(self, output_dir=None):
+        from modules.exploits.exploit_scanner import probe_and_scan_unknown
+        probe_and_scan_unknown(self.url, self.headers, output_dir=output_dir)
 
 
     def webinfo(self):

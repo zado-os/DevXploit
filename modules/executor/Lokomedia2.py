@@ -23,8 +23,9 @@ class Lokomedia2(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
-        return print('no exploits found.')
+    def exploit(self, output_dir=None):
+        from modules.executor.Lokomedia import Lokomedia
+        return Lokomedia(self.url, self.headers).exploit(output_dir=output_dir)
 
     def webinfo(self):
         web = GatherHost(self.url,self.headers)

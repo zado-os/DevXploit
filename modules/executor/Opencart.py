@@ -23,8 +23,14 @@ class Opencart(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
-        return print('no exploits found.')
+    def exploit(self, output_dir=None):
+        from modules.exploits.opencart_exploits import OCExploits
+        from modules.exploits.exploit_scanner import run_exploit_scan, OPENCART_EXPLOIT_CHAIN
+        oc = OCExploits(self.url, self.headers)
+        return run_exploit_scan(
+            "OpenCart", oc, OPENCART_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         web = GatherHost(self.url,self.headers)

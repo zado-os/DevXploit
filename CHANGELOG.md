@@ -1,3 +1,20 @@
+#### v2.3-nexploit (Nexploit — ZADO-OS Roger OS)
+- Rebrand: **Nexploit** (CLI `nexploit`) — repo [zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)
+- Launcher: `nexploit.py` · install path `/usr/share/nexploit`
+
+#### v2.2-vulnnader
+- 95 Exploits Scan modules (+ WP modern, Drupal, Magento, Joomla index)
+- `common/branding.py`, `common/exploit_http.py`
+
+#### v2.1-zado (ZADO-OS Roger OS Edition)
+- Developer / maintainer: **ZADO-OS (Roger OS)**
+- Unified Exploits Scan: 78+ modules (WP 17, Joomla 18, PS 27, Drupal 5, Lokomedia 6, OpenCart 5)
+- New packs: `drupal_exploits.py`, `lokomedia_exploits.py`, `opencart_exploits.py`
+- PrestaShop: megamenu, soopamobile, blocktestimonial, psmodthemeoptionpanel, homepageadvertise2
+- Joomla: com_jdownloads, com_jdownloads2 enabled
+- Fixes: PS shell `.text` check, WP blaze/catpro regex, Revslider shell URLs, PS `self.url` init
+- Export hits to `-o` log files; `--list-exploits` / `--exploit-cms` extended
+
 #### v2.0
 - Add Module to get the operating system of target and web server name & version.
 #### v1.9

@@ -25,9 +25,13 @@ class Joomla(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
+    def exploit(self, output_dir=None):
+        from modules.exploits.exploit_scanner import run_exploit_scan, JOO_EXPLOIT_CHAIN
         joox = JOOExploits(self.url, self.headers)
-        return joox.jooexploits()
+        return run_exploit_scan(
+            "Joomla", joox, JOO_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         web = GatherHost(self.url,self.headers)

@@ -24,8 +24,14 @@ class Drupal(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
-        return print('no exploits found.')
+    def exploit(self, output_dir=None):
+        from modules.exploits.drupal_exploits import DRUPExploits
+        from modules.exploits.exploit_scanner import run_exploit_scan, DRUPAL_EXPLOIT_CHAIN
+        dr = DRUPExploits(self.url, self.headers)
+        return run_exploit_scan(
+            "Drupal", dr, DRUPAL_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         web = GatherHost(self.url,self.headers)

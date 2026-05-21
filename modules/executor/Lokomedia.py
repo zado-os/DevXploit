@@ -23,8 +23,14 @@ class Lokomedia(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
-        return print('no exploits found.')
+    def exploit(self, output_dir=None):
+        from modules.exploits.lokomedia_exploits import LMExploits
+        from modules.exploits.exploit_scanner import run_exploit_scan, LOKOMEDIA_EXPLOIT_CHAIN
+        lm = LMExploits(self.url, self.headers)
+        return run_exploit_scan(
+            "Lokomedia", lm, LOKOMEDIA_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         web = GatherHost(self.url,self.headers)

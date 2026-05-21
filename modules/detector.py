@@ -31,12 +31,16 @@ class CMS(object):
         serveros=False,
         cmsinfo=False,
         dnsdump=False,
-        port=False
+        port=False,
+        force_cms=None,
+        output_dir=None,
         ):
 
         self.url = url
         self.headers = headers
         self.exploit = exploit
+        self.force_cms = force_cms
+        self.output_dir = output_dir
         self.domain = domain
         self.webinfo = webinfo
         self.serveros = serveros
@@ -143,23 +147,47 @@ class CMS(object):
         )
         return result
 
+    def _resolve_cms_class(self, detected_name):
+        from modules.exploits.exploit_scanner import CMS_CLASS_NAMES
+        if self.force_cms:
+            key = self.force_cms.lower()
+            if key != 'all':
+                name = CMS_CLASS_NAMES.get(key)
+                if name:
+                    detected_name = name
+        try:
+            return globals()[detected_name]
+        except KeyError:
+            return Uknown
+
+    def _run_exploit_scan(self, cms_name, instance):
+        from modules.exploits.exploit_scanner import (
+            run_forced_cms_scan,
+            probe_and_scan_unknown,
+        )
+        if self.force_cms and self.force_cms.lower() == 'all':
+            run_forced_cms_scan('all', self.url, self.headers, output_dir=self.output_dir)
+            return
+        if cms_name == 'Uknown':
+            probe_and_scan_unknown(self.url, self.headers, output_dir=self.output_dir)
+            return
+        instance.exploit(output_dir=self.output_dir)
+
     def instanciate(self):
         init_time = time.time()
         cms = self.serialize()
         if cms['name']:
-            try:
-                cms_class = globals()[cms['name']]
-            except KeyError:
-                cms_class = Uknown
+            cms_class = self._resolve_cms_class(cms['name'])
             instance = cms_class(self.url, self.headers)
+            display_cms = cms_class.__name__
+            if self.force_cms:
+                display_cms += ' [exploit: %s]' % self.force_cms
             print ('\n {0}[{1}Target{2}]{3} => {4}{5} \n '.format(B,W,B, W, self.url, end))
             print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
             print (' {0} looking for cms' .format(run))
-            print (' {0} CMS : {1}' .format(good , cms['name']))
+            print (' {0} CMS : {1}' .format(good , display_cms))
             if cms['exploit']:
-                print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
-                print(' {0} Exploits Scan'.format(run))
-                instance.exploit()
+                self._run_exploit_scan(cms['name'], instance)
             if cms['webinfo']:
                 print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
                 print(' {0} Web Hosting Information'.format(run))

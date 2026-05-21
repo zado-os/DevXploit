@@ -1,9 +1,9 @@
 FROM python:3-alpine
-MAINTAINER BENSAAD Anouar bensaad.tig@gmail.com
+MAINTAINER ZADO-OS Roger OS (based on Anouar Ben Saad VulnX)
 
 # Project Informations.
 LABEL name vulnx
-LABEL src "https://github.com/anouarbensaad/vulnx"
+LABEL src "https://github.com/zado-os/vulnx1v"
 LABEL creator anouarbensaad
 LABEL desc "Vulnx is a cms and vulnerabilites detection, an intelligent auto shell injector,\
             fast cms detection of target and fast scanner and informations gathering like\
@@ -21,7 +21,7 @@ LABEL desc "Vulnx is a cms and vulnerabilites detection, an intelligent auto she
 	    
 # Clonning Vulnx From Github
 RUN apk add --no-cache git && \
-    git clone https://github.com/anouarbensaad/vulnx.git
+    git clone https://github.com/zado-os/vulnx1v.git
 
 # Make vulnx group
 RUN addgroup vulnx

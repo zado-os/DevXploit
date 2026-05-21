@@ -1,60 +1,95 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/anouarbensaad/VulnX"><img src="https://i.ibb.co/ZxxFqxQ/vxv2.png" alt="VulnX"></a>
+  <a href="https://github.com/zado-os/vulnx1v"><img src="https://i.ibb.co/ZxxFqxQ/vxv2.png" alt="Nexploit"></a>
   <br>
-  VulnX
+  <strong>Nexploit</strong> — ZADO-OS Roger OS Edition
   <br>
 </h1>
 
-<h4 align="center">Vulnx 🕷️ is An Intelligent Bot Auto Shell Injector that detects vulnerabilities in multiple types of Cms </h4>
+<h4 align="center">
+  <strong>ZADO-OS · Roger OS</strong> — فحص CMS، Exploits Scan، وحقن Shell تلقائي<br>
+  <sub>Fork of <a href="https://github.com/anouarbensaad/vulnx">VulnX</a> by Anouar Ben Saad · maintained by ZADO-OS</sub>
+</h4>
 
 <p align="center">
-   <a href="https://github.com/anouarbensaad/vulnx/releases">
-    <img src="https://img.shields.io/github/release/anouarbensaad/vulnx.svg">
-  </a>
+  <img src="https://img.shields.io/badge/App-Nexploit-9cf?style=flat-square" alt="Nexploit">
+  <img src="https://img.shields.io/badge/Developer-ZADO--OS-blue?style=flat-square" alt="ZADO-OS">
+  <img src="https://img.shields.io/badge/Edition-Roger%20OS-green?style=flat-square" alt="Roger OS">
+  <img src="https://img.shields.io/badge/Exploits-95%20modules-red?style=flat-square" alt="Exploits">
+</p>
 
-  <a href="https://pypi.org/project/vulnx/">
-    <img src="https://img.shields.io/badge/pypi-vulnx-red.svg">
+<p align="center">
+  <a href="https://github.com/zado-os/vulnx1v">
+    <img src="https://img.shields.io/github/stars/zado-os/vulnx1v?style=flat-square" alt="stars">
   </a>
-
-  <a href="https://github.com/anouarbensaad/vulnx/issues?q=is%3Aissue+is%3Aclosed">
-      <img src="https://img.shields.io/github/issues-closed/anouarbensaad/vulnx.svg">
-  </a>
-  <a href="https://travis-ci.com/anouarbensaad/vulnx">
-    <img src="https://img.shields.io/travis/com/anouarbensaad/vulnx.svg">
+  <a href="https://github.com/zado-os/vulnx1v/issues">
+    <img src="https://img.shields.io/github/issues/zado-os/vulnx1v?style=flat-square" alt="issues">
   </a>
 </p>
 
 ![Screenshot from 2019-06-19 05-22-04](https://user-images.githubusercontent.com/23563528/59736664-7c2fed00-9252-11e9-936d-53ea02628711.png)
 
-https://github.com/anouarbensaad/vulnx/archive/master.zip
 <p align="center">
-  <a href="https://github.com/anouarbensaad/vulnx/wiki">VulnX Wiki</a> •
-  <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage">How To Use</a> •
-  <a href="https://github.com/anouarbensaad/vulnx/wiki/Compatibility-&-Dependencies">Compatibility</a> •
-  <a href="https://github.com/anouarbensaad/vulnx/wiki/Vulnx-Library">Library</a> •
+  <a href="https://github.com/zado-os/vulnx1v/archive/refs/heads/main.zip">Download ZIP</a> •
+  <a href="https://github.com/zado-os/vulnx1v">Repository</a> •
+  <a href="https://github.com/zado-os/vulnx1v/issues">Issues</a> •
+  <a href="https://github.com/anouarbensaad/vulnx/wiki/Usage">Upstream Wiki</a> •
 </p>
 
-**Vulnx** is An Intelligent Bot Auto [Shell Injector](https://github.com/anouarbensaad/vulnx/wiki/Usage#run-exploits) that detects vulnerabilities in multiple types of Cms, fast cms detection,informations gathering and vulnerabilitie Scanning of the target like subdomains, ipaddresses, country, org, timezone, region, ans and more ...
+**Nexploit** ([zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)) is an intelligent auto shell injector and CMS scanner. It detects the CMS, runs **95 Exploits Scan** modules with `[n/total]` progress, validates shells, and exports logs.
 
-Instead of injecting each and every shell manually like all the other tools do, VulnX analyses the target website checking the presence of a vulnerabilitie if so the shell will be Injected.searching urls with [dorks](https://github.com/anouarbensaad/vulnx/wiki/Usage#searching-dorks) Tool. 
+Maintained by **ZADO-OS (Roger OS)**. Based on [anouarbensaad/vulnx](https://github.com/anouarbensaad/vulnx) — same spirit, new name, sharper chains.
+
+```bash
+git clone https://github.com/zado-os/vulnx1v.git
+cd vulnx1v
+pip install -r requirements.txt
+python nexploit.py -u https://target.com --exploit-scan -o ./logs
+```
 
 -------------------------------------
 
-### _🕷️ Features_
+### _🕷️ Features — ZADO-OS Roger OS_
 
-- Detects cms (wordpress, joomla, prestashop, drupal, opencart, magento, lokomedia)
-- Target informations gatherings
-- Target Subdomains gathering
-- Multi-threading on demand
-- Checks for vulnerabilities
-- Auto shell injector
-- Exploit dork searcher
+#### CMS detection & intelligence
+- Auto-detect: **WordPress, Joomla, PrestaShop, Drupal, OpenCart, Magento, Lokomedia / Lokomedia2**
+- CMS info: themes, plugins, users, versions (`--cms`)
+- Web / host OS & server fingerprint (`-w`, built-in server probe)
+- Subdomain & domain gathering (`-d`)
+- DNS dump + map export (`--dns`, `-o`)
+- Port scan (`-p`)
+- Multi-target from file (`-i`)
+
+#### Exploits Scan (95 modules — verified chains)
+| CMS | Modules | Command |
+|-----|---------|---------|
+| WordPress | 23 | `nexploit -u URL -x` |
+| Joomla | 19 | `nexploit -u URL --exploit-cms joomla` |
+| PrestaShop | 28 | `nexploit -u URL --exploit-cms prestashop` |
+| Drupal | 8 | `nexploit -u URL --exploit-cms drupal` |
+| Lokomedia | 6 | `nexploit -u URL --exploit-cms lokomedia` |
+| OpenCart | 6 | `nexploit -u URL --exploit-cms opencart` |
+| Magento | 5 | `nexploit -u URL --exploit-cms magento` |
+| **All packs** | 95 | `nexploit -u URL --exploit-cms all` |
+
+- CLI: `nexploit` or `python nexploit.py` (alias: `python vulnx.py`)
+- Progress: `[7/23] WP File Manager VULN https://target/.../VulnX.php`
+- Logs: `-o ./logs` → `exploits_wordpress.log`, etc.
+- Catalog: `nexploit --list-exploits all`
+- New probes: WP File Manager, Duplicator, Gravity Forms, WooCommerce, Elementor, Drupal Geddon2, Magento REST, OpenCart BruteForce
+
+#### Automation & UX
+- Interactive CLI (`--it`) — URLSET / DORKSET
+- Exploit dork search (`-D`) + dork list (`-l`)
+- Google dork paging (`-n`)
+- Random User-Agent, SSL verify off, timeout-safe errors
+- Linux / Termux / Windows / Docker
+
+#### Payloads (`shell/`)
+- `VulnX.php`, `VulnX.html`, `VulnX.txt`, `VulnX.php.png`, `VulnX.php.mp4` (auto-fallback paths)
+
 - [`Ports Scan`](https://user-images.githubusercontent.com/23563528/58365946-40a83a00-7ec3-11e9-87c5-055ed67109b7.jpg) High Level
-- [`Dns`](https://user-images.githubusercontent.com/23563528/58365784-09388e00-7ec1-11e9-8a05-e71fa39f146d.png)-Servers Dump
-- Input multiple target to scan.
-- Dorks Listing by Name& by ExploitName.
-- Export multiple target from Dorks into a logfile.
+- [`Dns`](https://user-images.githubusercontent.com/23563528/58365784-09388e00-7ec1-11e9-8a05-e71fa39f146d.png) Servers Dump
 
 -------------------------------------
 
@@ -63,7 +98,7 @@ Instead of injecting each and every shell manually like all the other tools do, 
 
 To do this,run a scan with the --dns flag and -d for subdomains.
 To generate a map of isetso.rnu.tn, you can run the command 
-`vulnx -u isetso.rnu.tn --dns -d --output $PATH`in a new terminal.
+`nexploit -u isetso.rnu.tn --dns -d -o $PATH` in a new terminal.
 
 `$PATH` : Where the graphs results will be stored.
 
@@ -77,87 +112,64 @@ Let's generates an image displaying target Subdomains,MX & DNS data.
 
 -------------------------------------
 
-### _🕷️ Exploits_
+### _🕷️ Exploits Scan — Nexploit (95 modules)_
 <h1 align="center">
-<a href="https://github.com/anouarbensaad/VulnX"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
+<a href="https://github.com/zado-os/vulnx1v"><img src="https://user-images.githubusercontent.com/23563528/59737042-06c51c00-9254-11e9-87f8-876b33c87be1.gif" alt="Exploits Running"></a>
 </h1>
 
-##### Joomla
-- [x] [Com Jce            ]('#')
-- [x] [Com Jwallpapers    ]('#')
-- [x] [Com Jdownloads     ]('#')
-- [x] [Com Jdownloads2    ]('#')
-- [x] [Com Weblinks       ]('#')
-- [x] [Com Fabrik         ]('#')
-- [x] [Com Fabrik2        ]('#')
-- [x] [Com Jdownloads Index]('#')
-- [x] [Com Foxcontact     ]('#')
-- [x] [Com Blog           ]('#')
-- [x] [Com Users          ]('#')
-- [x] [Com Ads Manager    ]('#')
-- [x] [Com Sexycontactform]('#')
-- [x] [Com Media          ]('#')
-- [x] [Mod_simplefileupload]('#')
-- [x] [Com Facileforms    ]('#')
-- [x] [Com Facileforms    ]('#')
-- [x] [Com extplorer      ]('#')
+> كل وحدة تُختبر عبر HTTP فعلي: رفع/طلب ثم التحقق من `Vuln X` في الاستجابة.  
+> المصدر المرجعي للسلاسل: `modules/exploits/exploit_scanner.py`
 
-##### Wordpress
-- [x] [Simple Ads Manager   ](https://www.exploit-db.com/exploits/36614)
-- [x] [InBoundio Marketing  ](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_inboundio_marketing_file_upload) 
-- [x] [WPshop eCommerce     ](https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_wpshop_ecommerce_file_upload)
-- [x] [Synoptic             ](https://cxsecurity.com/issue/WLB-2017030099) 
-- [x] [Showbiz Pro          ](https://www.exploit-db.com/exploits/35385) 
-- [x] [Job Manager          ](https://www.exploit-db.com/exploits/45031) 
-- [x] [Formcraft            ](https://www.exploit-db.com/exploits/30002)
-- [x] [PowerZoom            ](http://www.exploit4arab.org/exploits/399)
-- [x] [Download Manager     ](https://www.exploit-db.com/exploits/35533)
-- [x] [CherryFramework      ](https://www.exploit-db.com/exploits/45896)
-- [x] [Catpro               ](https://vulners.com/zdt/1337DAY-ID-20256)
-- [x] [Blaze SlideShow      ](https://0day.today/exploits/18500)
-- [x] [Wysija-Newsletters   ](https://www.exploit-db.com/exploits/33991)
+##### Joomla (19) — `nexploit --list-exploits joomla`
+| # | Module | Method | Status |
+|---|--------|--------|--------|
+| 1 | com_jce | `com_jce` | ✅ |
+| 2 | com_media | `com_media` | ✅ |
+| 3 | com_jdownloads | `com_jdownloads` | ✅ |
+| 4 | com_jdownloads2 | `com_jdownloads2` | ✅ |
+| 5 | com_jdownloads Index | `com_jdownloads_index` | ✅ NEW |
+| 6 | com_fabrik | `com_fabrika` | ✅ |
+| 7 | com_fabrik2 | `com_fabrikb` | ✅ |
+| 8 | com_foxcontact | `com_foxcontact` | ✅ |
+| 9 | com_ads_manager | `com_adsmanager` | ✅ |
+| 10 | com_blog | `com_blog` | ✅ |
+| 11 | com_users | `com_users` | ✅ |
+| 12 | com_weblinks | `comweblinks` | ✅ |
+| 13 | mod_simplefileupload | `mod_simplefileupload` | ✅ |
+| 14 | com_jbcatalog | `com_jbcatalog` | ✅ |
+| 15 | com_sexycontactform | `com_sexycontactform` | ✅ |
+| 16 | com_rokdownloads | `com_rokdownloads` | ✅ |
+| 17 | com_extplorer | `com_extplorer` | ✅ |
+| 18 | com_jwallpapers | `com_jwallpapers` | ✅ |
+| 19 | com_facileforms | `com_facileforms` | ✅ |
 
-##### Drupal
-- [ ] [Add Admin            ]('#')
-- [ ] [Drupal BruteForcer   ]('#')
-- [ ] [Drupal Geddon2       ]('#')
+##### WordPress (23) — `nexploit --list-exploits wordpress`
+| Module | EDB / ref |
+|--------|-----------|
+| Wysija, Blaze, Synoptic, Catpro, Cherry, Download Manager, Formcraft, Job Manager, Showbiz, WPshop, PowerZoom, Revslider (multi-path), SAM, InBoundio, Adblock, Levo, Thumbnail | [exploit-db.com](https://www.exploit-db.com) |
+| **WP File Manager** (CVE-2020-25213), **Duplicator**, **Gravity Forms**, **WooCommerce Upload**, **Elementor**, **Contact Form 7** | ✅ NEW — ZADO-OS |
 
-##### PrestaShop
-- [x] [attributewizardpro   ]('#')
-- [x] [columnadverts        ]('#')
-- [ ] [soopamobile          ]('#')
-- [x] [pk_flexmenu          ]('#')
-- [x] [pk_vertflexmenu      ]('#')
-- [x] [nvn_export_orders    ]('#')
-- [x] [megamenu             ]('#')
-- [x] [tdpsthemeoptionpanel ]('#')
-- [ ] [psmodthemeoptionpanel]('#')
-- [x] [masseditproduct      ]('#')
-- [ ] [blocktestimonial     ]('#')
-- [x] [soopabanners         ]('#')
-- [x] [Vtermslideshow       ]('#')
-- [x] [simpleslideshow      ]('#')
-- [x] [productpageadverts   ]('#')
-- [x] [homepageadvertise    ]('#')
-- [ ] [homepageadvertise2   ]('#')
-- [x] [jro_homepageadvertise]('#')
-- [x] [advancedslider       ]('#')
-- [x] [cartabandonmentpro   ]('#')
-- [x] [cartabandonmentproOld]('#')
-- [x] [videostab            ]('#')
-- [x] [wg24themeadministration]('#')
-- [x] [fieldvmegamenu       ]('#')
-- [x] [wdoptionpanel        ]('#')
+##### Drupal (8) — `nexploit --exploit-cms drupal`
+| Module | Status |
+|--------|--------|
+| Avatar RCE, Drupalgeddon2 probe, **Geddon2 RCE**, **Add Admin**, **BruteForcer**, Install exposure, Views UI, files/VulnX | ✅ |
 
-##### Opencart
-- [ ] [Opencart BruteForce]('#')
+##### PrestaShop (28)
+All README modules active: attributewizardpro, columnadverts, soopamobile, megamenu, pk_flex/vert, nvn_export, tdpstheme, psmodtheme, massedit, blocktestimonial, soopabanners, sliders, carts, videostab, wg24, fieldvmegamenu, wdoptionpanel, homepageadvertise(2), jro_homepage, advancedslider, etc.
+
+##### Lokomedia (6) · OpenCart (6) · Magento (5)
+| CMS | Highlights |
+|-----|------------|
+| Lokomedia | Admin upload, smiley, RSS, upload, config leak, filemanager |
+| OpenCart | Filemanager, storage, vQmod, install, API, **BruteForce login** |
+| Magento | REST API, downloader, config leak, media shell, cron.php |
 
 
 -------------------------------------
 
 ### _🕷️ VulnxMode_ 
 `NEW`
-vulnx now have an interactive mode.
+Nexploit interactive mode (`nexploit --it`).
 ***URLSET***
 
 ![vulnxmode_url](https://user-images.githubusercontent.com/23563528/68983791-fddd7400-080c-11ea-8e2b-c463a2c8f8c5.png)
@@ -171,24 +183,56 @@ vulnx now have an interactive mode.
 
 
 ### _🕷️ Available command line options_
-[`READ VULNX WIKI`](https://github.com/anouarbensaad/vulnx/wiki/Usage)
+[Upstream VulnX Wiki](https://github.com/anouarbensaad/vulnx/wiki/Usage) · [zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)
 
-    usage: vulnx [options]
-    
-      -u --url              url target
-      -D --dorks            search webs with dorks
-      -o --output           specify output directory
-      -t --timeout          http requests timeout
-      -c --cms-info         search cms info[themes,plugins,user,version..]
-      -e --exploit          searching vulnerability & run exploits
-      -w --web-info         web informations gathering
-      -d --domain-info      subdomains informations gathering
-      -l, --dork-list       list names of dorks exploits
-      -n, --number-page     number page of search engine(Google)
-      -p, --ports           ports to scan
-      -i, --input           specify domains to scan from an input file 
-      --threads             number of threads
-      --dns                 dns informations gathering
+Run `python nexploit.py -h` or `nexploit -h` after install.
+
+    usage: vulnx.py [options]
+
+      -u, --url             URL target to scan
+      -D, --dorks           Search websites with dorks (exploit name)
+      -o, --output          Specify output directory (DNS maps, dork logs)
+      -n, --number-pages    Dork search: number of Google result pages (default: 1)
+      -i, --input           Scan multiple domains from a text file (one URL per line)
+      -l, --dork-list       List dork exploit names
+                            choices: wordpress, prestashop, joomla, lokomedia, drupal, all
+      -p, --ports           Port number to scan
+      -e, --exploit         Search vulnerabilities and run exploits
+      -x, --exploit-scan    Run Exploits Scan (per detected CMS)
+      --exploit-cms         Force scan: wordpress, joomla, prestashop, drupal, lokomedia, opencart, all
+      --list-exploits       List modules: wordpress, joomla, prestashop, drupal, lokomedia, opencart, all
+      --it                  Interactive VulnX mode (URLSET / DORKSET)
+      --cms                 CMS info (themes, plugins, users, version, …)
+      -w, --web-info        Web / host information gathering
+      -d, --domain-info     Subdomain information gathering
+      --dns                 DNS dump (subdomains, MX, maps via dnsdumpster)
+
+### _🕷️ Requirements_
+
+Python 3 with dependencies from `requirements.txt`:
+
+    requests
+    bs4
+
+Install: `pip install -r requirements.txt`
+
+### _🕷️ Project layout_
+
+    vulnx.py              Main entry point
+    install.sh            Install on Linux (root) / Termux
+    update.sh             Update installed copy
+    requirements.txt      Python dependencies
+    common/               HTTP helpers, banner, colors, output
+    modules/
+      detector.py         CMS detection and scan orchestration
+      cli/                Interactive mode
+      dorks/              Dork search engine
+      executor/           Per-CMS exploit runners
+      exploits/           Exploit payloads
+      gathering/          CMS / host intelligence
+    shell/                Shell payloads (VulnX.php, VulnX.html, …)
+    bin/                  Desktop launcher (vulnx.desktop)
+    docker/               Dockerfile and Docker notes
 
 -------------------------------------
 
@@ -197,10 +241,10 @@ vulnx now have an interactive mode.
 VulnX in DOCKER !!.
 
 ```bash
-$ git clone https://github.com/anouarbensaad/VulnX.git
-$ cd VulnX
-$ docker build -t vulnx ./docker/
-$ docker run -it --name vulnx vulnx:latest -u http://example.com
+$ git clone https://github.com/zado-os/vulnx1v.git
+$ cd vulnx1v
+$ docker build -t nexploit ./docker/
+$ docker run -it --name nexploit nexploit:latest -u http://example.com
 ```
 
 run vulnx container in interactive mode
@@ -212,14 +256,10 @@ run vulnx container in interactive mode
 to view logfiles mount it in a volume like so:
 
 ```bash
-$ docker run -it --name vulnx -v "$PWD/logs:/VulnX/logs" vulnx:latest -u http://example.com
+$ docker run -it --name nexploit -v "$PWD:/vulnx" nexploit:latest -u http://example.com
 ```
 
-change the [mounting directory](https://github.com/anouarbensaad/vulnx/blob/master/docker/Dockerfile#L46)..
-
-```Dockerfile
-VOLUME [ "$PATH" ]
-```
+The image defines a mount point at `/vulnx` (see `docker/Dockerfile`). Map a host folder there to persist logs and output on the host.
 
 -------------------------------------
 
@@ -227,54 +267,123 @@ VOLUME [ "$PATH" ]
 
 
 ```bash
-$ git clone https://github.com/anouarbensaad/vulnx.git
-$ cd VulnX
-$ chmod +x install.sh
-$ ./install.sh
+$ git clone https://github.com/zado-os/vulnx1v.git
+$ cd vulnx1v
+$ sudo chmod +x install.sh
+$ sudo ./install.sh
 ```
-Now run `vulnx`
+
+Install copies to `/usr/share/nexploit` and adds `nexploit` (+ alias `vulnx`) in `/usr/local/bin`. Then:
+
+```bash
+$ nexploit -u http://example.com --exploit-scan
+```
+
+Portable:
+
+```bash
+$ pip install -r requirements.txt
+$ python3 nexploit.py -u http://example.com
+```
 
 ![vokoscreen-2019-07-05_03-59-48](https://user-images.githubusercontent.com/23563528/60695392-7a645b80-9ed9-11e9-94fb-f6025594a9e3.gif)
 
 
 ### _🕷️ Install vulnx on Termux_
 
-```BASH
+```bash
 $ pkg update
-$ pkg install -y git
-$ git clone http://github.com/anouarbensaad/vulnx
-$ cd vulnx
+$ pkg install -y git python
+$ git clone https://github.com/zado-os/vulnx1v.git
+$ cd vulnx1v
 $ chmod +x install.sh
 $ ./install.sh
 ```
+
+Run as root in Termux when prompted by the installer.
 [**CLICK HERE TO SHOW THE RESULT**](https://user-images.githubusercontent.com/23563528/58364091-98847800-7ea6-11e9-9a9a-c27717e4dda1.png)
 
 
 ### _🕷️ Install vulnx in Windows_
 
-- [click here](https://github.com/anouarbensaad/vulnx/archive/master.zip) to download vulnx
-- download and install python3
-- unzip **vulnx-master.zip** in ***c:/***
-- open the command prompt **cmd**.
+- [Download ZIP](https://github.com/zado-os/vulnx1v/archive/refs/heads/main.zip)
+- Install [Python 3](https://www.python.org/downloads/)
+- Unzip to `C:\vulnx1v`
+- Open **cmd** or PowerShell:
+
 ```
-> cd c:/vulnx-master
-> python vulnx.py
+> cd C:\vulnx1v
+> pip install -r requirements.txt
+> python nexploit.py -u http://example.com --exploit-scan
 ```
 
 -------------------------------------
 
-##### example command with options : settimeout=3 , cms-gathering = all , -d subdomains-gathering , run --exploits
-`vulnx -u http://example.com --timeout 3 -c all -d -w --exploit` 
+##### Exploits Scan (detected CMS)
 
-##### example command for searching dorks : -D or --dorks , -l --list-dorks 
-`vulnx --list-dorks`
-return table of exploits name.
-`vulnx -D blaze`
-return urls found with blaze dork
+```bash
+nexploit -u http://example.com --exploit-scan
+# or
+nexploit -u http://example.com -x
+```
+
+##### Force Exploits Scan for a specific CMS
+
+```bash
+nexploit -u http://example.com --exploit-cms wordpress
+nexploit -u http://example.com --exploit-cms all
+```
+
+##### List exploit modules by CMS
+
+```bash
+nexploit --list-exploits wordpress
+nexploit --list-exploits all
+```
+
+##### Scan target: CMS info, subdomains, web info, exploits
+
+```bash
+nexploit -u http://example.com --cms -d -w --exploit
+```
+
+##### DNS map and subdomain dump
+
+```bash
+nexploit -u http://example.com --dns -d -o ./output
+```
+
+##### Interactive mode
+
+```bash
+nexploit --it
+```
+
+##### Dorks: list names, then search
+
+```bash
+nexploit --dork-list wordpress
+nexploit -D blaze -n 2
+```
+
+##### Multiple targets from a file
+
+```bash
+nexploit -i targets.txt --cms -w
+```
+
+##### Port scan
+
+```bash
+nexploit -u http://example.com -p 80
+```
 
 -------------------------------------
 
 ### _🕷️ Versions_
+- **v2.3-nexploit** — Rebrand **Nexploit**, 95 modules, CLI `nexploit`, [zado-os/vulnx1v](https://github.com/zado-os/vulnx1v)
+- **v2.1-zado** — ZADO-OS Roger OS: Exploits Scan chains, Drupal/Lokomedia/OpenCart packs, log export
+- [v2.0](https://github.com/anouarbensaad/vulnx/releases) — OS / web server detection (see `CHANGELOG.md`)
 - [v1.9](https://github.com/anouarbensaad/vulnx/releases/tag/v1.9)
 - [v1.8](https://github.com/anouarbensaad/vulnx/releases/tag/v1.8)
 - [v1.7](https://github.com/anouarbensaad/vulnx/releases/tag/v1.7)
@@ -293,16 +402,24 @@ return urls found with blaze dork
 
 -------------------------------------
 
+### _🕷️ Credits — ZADO-OS Roger OS_
+
+| Role | Name |
+|------|------|
+| **Developer / Maintainer** | **ZADO-OS** (Roger OS) |
+| **Original author** | Anouar Ben Saad ([@anouarbensaad](https://github.com/anouarbensaad)) |
+| **Edition** | ZADO-OS Roger OS Edition — Exploits Scan engine |
+
+All banners, install scripts, and scan output include **ZADO-OS · Roger OS** branding.
+
 ### _🕷️ Contribution & License_
 
-You can contribute in following ways:
+Contributions welcome:
 
-- [Report bugs & add issues](https://github.com/anouarbensaad/VulnX/issues/new)
-- Search for new vulnerability
-- Develop plugins
-- Searching Exploits
-- Give suggestions **(Ideas)** to make it better
+- Report bugs & issues
+- Add exploit modules to `modules/exploits/exploit_scanner.py` chains
+- Improve CMS fingerprints & accuracy
 
-Do you want to have a conversation in private? email me : Bensaad.tig@gmail.com
+***VulnX (ZADO-OS Roger OS Edition)*** is licensed under [GPL-3.0 License](LICENSE)
 
-***VulnX*** is licensed under [GPL-3.0 License](https://github.com/anouarbensaad/VulnX/blob/master/LICENSE)
+Original project: [anouarbensaad/vulnx](https://github.com/anouarbensaad/vulnx)

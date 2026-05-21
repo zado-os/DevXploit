@@ -25,9 +25,13 @@ class Wordpress(object):
         # port to scan
         self.port = port
 
-    def exploit(self):
+    def exploit(self, output_dir=None):
+        from modules.exploits.exploit_scanner import run_exploit_scan, WP_EXPLOIT_CHAIN
         wpx = WPExploits(self.url, self.headers)
-        return wpx.wpexploits()
+        return run_exploit_scan(
+            "WordPress", wpx, WP_EXPLOIT_CHAIN,
+            output_dir=output_dir, target_url=self.url,
+        )
 
     def webinfo(self):
         whg = GatherHost(self.url,self.headers)

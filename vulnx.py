@@ -4,17 +4,18 @@
 from __future__ import (absolute_import, division, print_function)
 
 """
-The vulnx main part.
-Author: anouarbensaad
-Desc  : CMS-Detector and Vulnerability Scanner & exploiter
-Copyright (c)
-See the file 'LICENSE' for copying permission
+Nexploit — CMS Detector, Exploits Scan & Shell Injector.
+ZADO-OS Roger OS Edition · https://github.com/zado-os/vulnx1v
+Fork of VulnX by Anouar Ben Saad. See LICENSE.
 """
 
 from modules.detector import CMS
 from modules.dorks.engine import Dork
 from modules.dorks.helpers import DorkManual
-from modules.cli.cli import CLI
+try:
+    from modules.cli.cli import CLI
+except ImportError:
+    CLI = None
 from common.colors import red, green, bg, G, R, W, Y, G, good, bad, run, info, end, que, bannerblue2
 
 from common.requestUp import random_UserAgent
@@ -76,6 +77,16 @@ def parse_args():
     # Switches
     parser.add_argument('-e', '--exploit', help='searching vulnerability & run exploits',
                         dest='exploit', action='store_true')
+    parser.add_argument('-x', '--exploit-scan', help='run CMS Exploits Scan (same as --exploit)',
+                        dest='exploit_scan', action='store_true')
+    parser.add_argument('--exploit-cms', dest='exploit_cms',
+                        choices=['wordpress', 'joomla', 'prestashop', 'drupal',
+                                 'lokomedia', 'opencart', 'magento', 'all'],
+                        help='force Exploits Scan for a CMS (or all packs)')
+    parser.add_argument('--list-exploits', dest='list_exploits',
+                        choices=['wordpress', 'joomla', 'prestashop', 'drupal',
+                                 'lokomedia', 'opencart', 'magento', 'all'],
+                        help='list Exploits Scan modules (Nexploit / ZADO-OS)')
     parser.add_argument('--it', help='interactive mode.',
                         dest='cli', action='store_true')
 
@@ -101,17 +112,19 @@ input_file = args.input_file
 warnings.filterwarnings('ignore')
 
 def detection():
-
+    run_exploit = args.exploit or args.exploit_scan
     instance = CMS(
         url,
         headers=HEADERS,
-        exploit=args.exploit,
+        exploit=run_exploit,
         domain=args.subdomains,
         webinfo=args.webinfo,
         serveros=True,
         cmsinfo=args.cms,
         dnsdump=args.dnsdump,
-        port=args.scanports
+        port=args.scanports,
+        force_cms=args.exploit_cms,
+        output_dir=args.output,
             )
     instance.instanciate()
 
@@ -133,6 +146,9 @@ def dorks_manual():
 
 def interactive_cli():
     if args.cli:
+        if CLI is None:
+            print(bad + " Interactive mode requires readline (Linux/macOS)." + W)
+            sys.exit(1)
         cli = CLI(headers=HEADERS)
         cli.general("")
 
@@ -142,7 +158,16 @@ def signal_handler(signal, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 
+def list_exploits_catalog():
+    from modules.exploits.exploit_scanner import print_exploit_catalog
+    print_exploit_catalog(args.list_exploits)
+
+
 if __name__ == "__main__":
+
+    if args.list_exploits:
+        list_exploits_catalog()
+        sys.exit(0)
 
     dork_engine()
     dorks_manual()
