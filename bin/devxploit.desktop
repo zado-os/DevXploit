@@ -2,8 +2,8 @@
 Version=1.0
 Type=Application
 Name=DevXploit
-Comment=CMS exploit framework — ZADO-OS Roger OS
-Exec=devxploit --it
-Icon=devxploiticon
+Comment=DevXploit — real CMS exploitation (ZADO-OS)
+Exec=devxploit --tui
+Icon=/usr/share/pixmaps/devxploit.png
 Terminal=true
 Categories=Utility;Security;

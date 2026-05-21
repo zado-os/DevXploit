@@ -1,14 +1,14 @@
 <p align="center">
-  <a href="https://github.com/zado-os/devxploit"><img src="https://i.ibb.co/ZxxFqxQ/vxv2.png" alt="DevXploit"></a>
+  <a href="https://github.com/zado-os/devxploit"><img src="assets/icon-512.png" alt="DevXploit" width="160"></a>
   <br>
-  <strong>DevXploit v4.3.0</strong> — ZADO-OS Roger OS Edition
+  <strong>DevXploit v4.4.0</strong> — ZADO-OS Roger OS Edition
   <br>
   <sub>588 modules · CVE match · Nuclei · WPScan · SQLi/XSS · PDF reports</sub>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/version-4.3.0-red?style=flat-square" alt="version">
+  <img src="https://img.shields.io/badge/version-4.4.0-red?style=flat-square" alt="version">
   <img src="https://img.shields.io/badge/Modules-588+-red?style=flat-square" alt="modules">
   <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=flat-square" alt="license">
   <a href="https://github.com/zado-os/devxploit">
@@ -53,6 +53,9 @@ chmod +x devxploit install.sh
 |---------|----------------|-------------|
 | Exploit scan | `-x` | **REAL EXPLOIT** — upload/RCE + shell verify (not INFO-only) |
 | Detect only | `--detect-only` | Old mode: plugin path INFO without exploit |
+| Icon | `assets/icon-512.png` | Desktop / GitHub / `bin/devxploiticon.png` |
+
+**Exploit chain (every plugin probe):** CVE PoC → legacy module → ajax upload → shell verify.
 | **Full power** | `--full` | CVE + SQLi/XSS + WPScan + Nuclei + MSF + PDF + rate-limit + double-verify |
 | CVE auto-match | `-x` or `--cve-match` | Plugin `readme.txt` version vs `data/cve_db.json` + CVSS |
 | CF7 exploit | module #23 | **CVE-2020-35489** upload bypass if version ≤5.3.1 + file form |

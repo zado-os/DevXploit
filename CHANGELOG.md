@@ -1,3 +1,8 @@
+#### v4.4.0 — Full real exploit + official icon
+- All CMS probes: CVE → legacy bridge → generic upload (WP/Joomla/PrestaShop)
+- Path/exposure probes attempt upload.php + real leaks in REAL mode
+- App icon: `assets/icon-512.png`, Kali desktop `devxploit.png`
+
 #### v4.3.0 — Real Exploit Mode (default with -x)
 - 2026 pack: tries real CVE handlers (Royal Elementor, CF7, File Manager, HT Mega, …) — MISS if no RCE
 - Banner shows `[REAL EXPLOIT]`; use `--detect-only` for old INFO-only behavior

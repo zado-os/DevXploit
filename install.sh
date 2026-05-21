@@ -39,7 +39,7 @@ termuxOS() {
         fi
     fi
     mkdir -p "$TERMUX_DIR"
-    cp -r common modules shell devxploit.py install.sh update.sh devxploit requirements.txt "$TERMUX_DIR/"
+    cp -r common modules shell assets bin data devxploit.py install.sh update.sh devxploit requirements.txt "$TERMUX_DIR/"
     chmod +x "$TERMUX_DIR/devxploit" 2>/dev/null || true
     cat > /data/data/com.termux/files/usr/bin/devxploit << 'EOF'
 #!/data/data/com.termux/files/usr/bin/bash
@@ -64,7 +64,8 @@ debianOS() {
         fi
     fi
     mkdir -p "$INSTALL_DIR"
-    cp -r common modules shell devxploit.py install.sh update.sh devxploit requirements.txt "$INSTALL_DIR/"
+    cp -r common modules shell assets bin data devxploit.py install.sh update.sh devxploit requirements.txt "$INSTALL_DIR/"
+    cp -f assets/icon-512.png /usr/share/pixmaps/devxploit.png 2>/dev/null || true
     chmod +x "$INSTALL_DIR/devxploit" "$INSTALL_DIR/update.sh" 2>/dev/null || true
     cat > /usr/local/bin/devxploit << EOF
 #!/bin/bash
