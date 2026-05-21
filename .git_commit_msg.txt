@@ -1,1 +1,5 @@
-feat: add 2026 exploit pack — 50 probes per CMS (350 new, 468 total)
+v4.0.0: full platform — 588 modules, reports, WAF, batch, frameworks
+
+- JSON/HTML reports, hits-only, legacy/2026 filters, threads, proxy
+- CMS confidence + WAF; Laravel/Shopify/Moodle/Shopware packs
+- PrestaShop strict verify; interactive search/scan

@@ -15,43 +15,37 @@ try:
     from modules.cli.cli import CLI
 except ImportError:
     CLI = None
-from common.colors import red, green, bg, G, R, W, Y, G, good, bad, run, info, end, que, bannerblue2
-
+from common.colors import red, green, G, R, W, good, bad, run
 from common.requestUp import random_UserAgent
-from common.uriParser import parsing_url as hostd
 from common.banner import banner
+from common.scan_options import ScanOptions
 
 import sys
 import argparse
-import re
-import os
-import socket
-import common
 import warnings
 import signal
-import requests
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-HEADERS = {
-    'User-Agent': random_UserAgent(),
-    'Content-type': '*/*',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.5',
-    'Connection': 'keep-alive',
-}
-
 _EXPLOIT_CMS = [
     'intel', 'wordpress', 'joomla', 'prestashop', 'drupal',
-    'lokomedia', 'opencart', 'magento', 'all',
+    'lokomedia', 'opencart', 'magento', 'laravel', 'shopify', 'moodle', 'shopware', 'all',
 ]
 
-warnings.filterwarnings(
-    action="ignore", message=".*was already imported", category=UserWarning)
 warnings.filterwarnings(action="ignore", category=DeprecationWarning)
 
-banner()
+
+def build_headers(proxy=None):
+    h = {
+        'User-Agent': random_UserAgent(),
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+    }
+    if proxy:
+        h['proxy'] = proxy
+    return h
 
 
 def parser_error(errmsg):
@@ -63,56 +57,46 @@ def parser_error(errmsg):
 def parse_args():
     parser = argparse.ArgumentParser(
         prog='devxploit',
-        epilog='\tExample:\r\ndevxploit -u example.com --exploit-scan')
+        epilog='\tExample:\r\ndevxploit -u https://target.com -x --hits-only -o ./logs/report.json')
     parser.error = parser_error
     parser._optionals.title = "\nOPTIONS"
-    parser.add_argument('-u', '--url', help="url target to scan")
-    parser.add_argument(
-        '-D', '--dorks', help='search webs with dorks', dest='dorks', type=str)
-    parser.add_argument(
-        '-o', '--output', help='specify output directory', required=False)
-    parser.add_argument('-n', '--number-pages',
-                        help='search dorks number page limit', dest='numberpage', type=int)
-    parser.add_argument('-i', '--input', help='specify input file of domains to scan', dest='input_file', required=False)
-    parser.add_argument('-l', '--dork-list', help='list names of dorks exploits', dest='dorkslist',
+    parser.add_argument('-u', '--url', help="Target URL")
+    parser.add_argument('-D', '--dorks', help='Search with dorks', dest='dorks', type=str)
+    parser.add_argument('-o', '--output', help='Output directory or report.json path')
+    parser.add_argument('-n', '--number-pages', dest='numberpage', type=int)
+    parser.add_argument('-i', '--input', help='File with URLs (batch scan)', dest='input_file')
+    parser.add_argument('-l', '--dork-list', dest='dorkslist',
                         choices=['wordpress', 'prestashop', 'joomla', 'lokomedia', 'drupal', 'all'])
-    parser.add_argument('-p', '--ports', help='ports to scan',
-                        dest='scanports', type=int)
-    parser.add_argument('-e', '--exploit', help='search vulnerability & run exploits',
-                        dest='exploit', action='store_true')
-    parser.add_argument('-x', '--exploit-scan', help='run CMS Exploits Scan (same as --exploit)',
-                        dest='exploit_scan', action='store_true')
-    parser.add_argument('--exploit-cms', dest='exploit_cms',
-                        choices=_EXPLOIT_CMS,
-                        help='force Exploits Scan for a CMS pack (or all)')
-    parser.add_argument('--list-exploits', dest='list_exploits',
-                        choices=_EXPLOIT_CMS,
-                        help='list Exploits Scan modules')
-    parser.add_argument('--it', help='interactive mode.',
-                        dest='cli', action='store_true')
-    parser.add_argument('--cms', help='search cms info[themes,plugins,user,version..]',
-                        dest='cms', action='store_true')
-    parser.add_argument('-w', '--web-info', help='web informations gathering',
-                        dest='webinfo', action='store_true')
-    parser.add_argument('-d', '--domain-info', help='subdomains informations gathering',
-                        dest='subdomains', action='store_true')
-    parser.add_argument('--dns', help='dns informations gatherings',
-                        dest='dnsdump', action='store_true')
+    parser.add_argument('-p', '--ports', dest='scanports', type=int)
+    parser.add_argument('-e', '--exploit', dest='exploit', action='store_true')
+    parser.add_argument('-x', '--exploit-scan', dest='exploit_scan', action='store_true')
+    parser.add_argument('--exploit-cms', dest='exploit_cms', choices=_EXPLOIT_CMS)
+    parser.add_argument('--list-exploits', dest='list_exploits', choices=_EXPLOIT_CMS)
+    parser.add_argument('--legacy-only', dest='legacy_only', action='store_true',
+                        help='Run only classic exploit modules')
+    parser.add_argument('--2026-only', dest='pack_2026', action='store_true',
+                        help='Run only 2026 CVE/advisory pack')
+    parser.add_argument('--hits-only', dest='hits_only', action='store_true',
+                        help='Show only HIT/EXPOSE (hide MISS and most INFO)')
+    parser.add_argument('--min-severity', dest='min_severity',
+                        choices=['info', 'expose', 'shell'],
+                        help='Minimum finding level to report')
+    parser.add_argument('--threads', dest='threads', type=int, default=1,
+                        help='Parallel threads for -i batch mode')
+    parser.add_argument('--proxy', dest='proxy', help='HTTP proxy http://host:port')
+    parser.add_argument('--report', dest='report',
+                        help='JSON report path (default: output/report.json if -o set)')
+    parser.add_argument('--it', dest='cli', action='store_true')
+    parser.add_argument('--cms', dest='cms', action='store_true')
+    parser.add_argument('-w', '--web-info', dest='webinfo', action='store_true')
+    parser.add_argument('-d', '--domain-info', dest='subdomains', action='store_true')
+    parser.add_argument('--dns', dest='dnsdump', action='store_true')
     return parser.parse_args()
 
 
-args = parse_args()
-url = args.url
-input_file = args.input_file
-warnings.filterwarnings('ignore')
-
-
-def detection():
-    run_exploit = args.exploit or args.exploit_scan
-    instance = CMS(
-        url,
-        headers=HEADERS,
-        exploit=run_exploit,
+def scan_kwargs_from_args(args):
+    return dict(
+        exploit=args.exploit or args.exploit_scan,
         domain=args.subdomains,
         webinfo=args.webinfo,
         serveros=True,
@@ -120,74 +104,87 @@ def detection():
         dnsdump=args.dnsdump,
         port=args.scanports,
         force_cms=args.exploit_cms,
-        output_dir=args.output,
+        output_dir=args.output if args.output and not args.output.endswith('.json') else None,
     )
-    instance.instanciate()
 
 
-def dork_engine():
+def main():
+    args = parse_args()
+    pack_mode = None
+    if args.legacy_only:
+        pack_mode = 'legacy'
+    if args.pack_2026:
+        pack_mode = '2026'
+    report_path = args.report
+    if not report_path and args.output and str(args.output).endswith('.json'):
+        report_path = args.output
+    elif not report_path and args.output:
+        import os
+        report_path = os.path.join(args.output, 'devxploit_report.json')
+
+    ScanOptions.configure(
+        pack_mode=pack_mode,
+        hits_only=args.hits_only,
+        min_severity=args.min_severity,
+        threads=args.threads or 1,
+        proxy=args.proxy,
+        report_path=report_path,
+    )
+
+    HEADERS = build_headers(args.proxy)
+    if args.proxy:
+        import os
+        os.environ['HTTP_PROXY'] = args.proxy
+        os.environ['HTTPS_PROXY'] = args.proxy
+
+    banner()
+
+    if args.list_exploits:
+        from modules.exploits.exploit_scanner import print_exploit_catalog
+        print_exploit_catalog(args.list_exploits)
+        return
+
     if args.dorks:
-        Dork(
-            exploit=args.dorks,
-            headers=HEADERS,
-            pages=(args.numberpage or 1)
-        ).search()
+        Dork(exploit=args.dorks, headers=HEADERS, pages=(args.numberpage or 1)).search()
+        return
 
-
-def dorks_manual():
     if args.dorkslist:
         DorkManual(select=args.dorkslist).list()
+        return
 
-
-def interactive_cli():
     if args.cli:
         if CLI is None:
             print(bad + " Interactive mode requires readline (Linux/macOS)." + W)
             sys.exit(1)
         CLI(headers=HEADERS).general("")
+        return
+
+    skw = scan_kwargs_from_args(args)
+
+    if args.input_file:
+        from modules.batch_scan import run_batch
+        with open(args.input_file, 'r') as fh:
+            lines = fh.readlines()
+        run_batch(lines, HEADERS, threads=args.threads or 3, **skw)
+        return
+
+    if args.url:
+        url = args.url
+        if not url.startswith('http'):
+            url = 'https://' + url
+            print(url)
+        CMS(url=url, headers=HEADERS, **skw).instanciate()
+        return
+
+    parser.print_help()
 
 
 def signal_handler(sig, frame):
-    print("%s(ID: {}) Cleaning up...\n Exiting...".format(sig) % (W))
-    exit(0)
+    print("%s Cleaning up...\n" % W)
+    sys.exit(0)
 
 
 signal.signal(signal.SIGINT, signal_handler)
 
-
-def list_exploits_catalog():
-    from modules.exploits.exploit_scanner import print_exploit_catalog
-    print_exploit_catalog(args.list_exploits)
-
-
 if __name__ == "__main__":
-
-    if args.list_exploits:
-        list_exploits_catalog()
-        sys.exit(0)
-
-    dork_engine()
-    dorks_manual()
-    interactive_cli()
-
-    if url:
-        root = url
-        if root.startswith('http://') or root.startswith('https://'):
-            url = root
-        else:
-            url = 'https://' + root
-            print(url)
-        detection()
-
-    if input_file:
-        with open(input_file, 'r') as urls:
-            u_array = [line.strip('\n') for line in urls]
-            try:
-                for line in u_array:
-                    if line.startswith('http'):
-                        url = line
-                    else:
-                        url = 'https://' + line
-                    detection()
-            except Exception as error:
-                print('error : ' + str(error))
+    main()

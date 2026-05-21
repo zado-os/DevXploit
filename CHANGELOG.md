@@ -1,3 +1,9 @@
+#### v4.0.0 — Full platform release (GitHub / Kali)
+- 588 modules: legacy + 2026×7 + Laravel/Shopify/Moodle/Shopware (30 each)
+- CMS confidence %, WAF detection, JSON/HTML reports
+- CLI: `--hits-only`, `--min-severity`, `--legacy-only`, `--2026-only`, `--threads`, `--proxy`
+- Batch scan `-i`, interactive `search`/`scan`, PrestaShop strict shell verify
+
 #### v3.2.0 — 2026 exploit pack (50 per CMS)
 - **350 new probes** (50 × WordPress, Joomla, PrestaShop, Drupal, OpenCart, Lokomedia, Magento)
 - Engine: `modules/exploits/probes_2026/` (catalog + `probe_engine.py`)

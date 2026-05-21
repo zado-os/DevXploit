@@ -65,7 +65,36 @@ class CLI():
     def run_exploits(self,url,headers):
         cms = CMS(url=url,headers=headers,exploit=True)
         cms.instanciate()
-    
+
+    def _search_modules(self, query):
+        from modules.exploits.exploit_scanner import CMS_EXPLOIT_CHAINS, _framework_chain
+        from modules.exploits.probes_2026.catalog_framework import FRAMEWORK_CHAINS
+        q = query.lower()
+        found = 0
+        for pack, chain in list(CMS_EXPLOIT_CHAINS.items()) + list(FRAMEWORK_CHAINS.items()):
+            if pack == 'lokomedia2':
+                continue
+            for label, method in chain:
+                if q in label.lower() or q in method.lower():
+                    print("  [%s] %s (%s)" % (pack, label, method))
+                    found += 1
+        if not found:
+            print(" No modules matching: %s" % query)
+
+    def _cli_scan(self, args_line):
+        parts = args_line.split()
+        if not parts:
+            print(" Usage: scan https://target.com [-x] [--hits-only]")
+            return
+        target = parts[0]
+        do_exploit = '-x' in parts or '--exploit-scan' in parts
+        hits_only = '--hits-only' in parts
+        from common.scan_options import ScanOptions
+        ScanOptions.configure(hits_only=hits_only)
+        if not target.startswith('http'):
+            target = 'https://' + target
+        CMS(url=target, headers=self.headers, exploit=do_exploit).instanciate()
+
     def dork_variable(self,dorkname, output, page):
         print("""
         VARIABLE        VALUE
@@ -300,6 +329,13 @@ class CLI():
             elif var_regx.search(cmd):
                 self.global_variables(dorkname, output_dir,
                                      numberpage, url, timeout)
+            elif cmd.startswith('search '):
+                self._search_modules(cmd[7:].strip())
+            elif cmd.startswith('scan '):
+                self._cli_scan(cmd[5:].strip())
+            elif cmd == 'modules':
+                from modules.exploits.exploit_scanner import print_exploit_catalog
+                print_exploit_catalog('all')
             else:
-                print("use (help) (?) to show man commands.")
+                print("Commands: <url> | dork <query> | scan <url> -x | search <cve> | modules | help")
 

@@ -9,7 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/App-DevXploit-9cf?style=flat-square" alt="DevXploit">
-  <img src="https://img.shields.io/badge/Modules-468+-red?style=flat-square" alt="modules">
+  <img src="https://img.shields.io/badge/Modules-588+-red?style=flat-square" alt="modules">
   <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=flat-square" alt="license">
   <a href="https://github.com/zado-os/devxploit">
     <img src="https://img.shields.io/github/stars/zado-os/devxploit?style=flat-square" alt="stars">
@@ -140,13 +140,15 @@ sequenceDiagram
 
 | Area | Capability |
 |------|------------|
-| CMS detection | WordPress, Joomla, PrestaShop, Drupal, OpenCart, Lokomedia, Magento |
-| Exploits Scan | **468** modules — legacy chains + **50×7 CMS 2026 pack** (CVE/advisory probes) |
-| Intel pack | `.git`, `.env`, phpinfo, wp-config backups, XML-RPC, Timthumb, PHPUnit, Adminer, phpMyAdmin, SQL dumps, Swagger, Spring Actuator, debug logs, WP REST users |
-| Shell payloads | `shell/DevXploit.php` (+ html/txt/gif) — query `?DevXploit=1` |
-| Output | `HIT` = verified shell body, `EXPOSE` = backup leak, `INFO` = panel/API, `MISS` = not vulnerable; `-o` logs |
-| Recon | Dorks, DNS dump, port scan, subdomain/web gathering |
-| Interactive | `devxploit --it` console (readline on Linux) |
+| CMS detection | 11 platforms + confidence % + WAF/CDN fingerprint |
+| Exploits Scan | **588** modules (legacy + 50×7 CMS 2026 + 30×4 frameworks) |
+| Intel pack | `.git`, `.env`, phpinfo, backups, XML-RPC, PHPUnit, Adminer, etc. |
+| Shell verify | Strict `HIT` — `php_uname` in body; rejects 404 false positives |
+| Reports | JSON + HTML via `--report` or `-o report.json` |
+| Filters | `--hits-only`, `--min-severity shell`, `--legacy-only`, `--2026-only` |
+| Batch | `-i urls.txt --threads 5` parallel scanning |
+| Proxy | `--proxy http://127.0.0.1:8080` |
+| Interactive | `search CVE`, `scan URL -x`, `modules` |
 
 ### Module counts by pack
 
@@ -160,11 +162,12 @@ sequenceDiagram
 | OpenCart | 6 | 50 | **56** | `--exploit-cms opencart` |
 | Lokomedia | 6 | 50 | **56** | `--exploit-cms lokomedia` |
 | Magento | 5 | 50 | **55** | `--exploit-cms magento` |
-| **All packs** | 118 | 350 | **468** | `devxploit -u URL --exploit-cms all` |
+| Laravel | — | 30 | **30** | `--exploit-cms laravel` |
+| Shopify | — | 30 | **30** | `--exploit-cms shopify` |
+| Moodle | — | 30 | **30** | `--exploit-cms moodle` |
+| Shopware | — | 30 | **30** | `--exploit-cms shopware` |
 
-*(Banner may show 468 modules loaded — Intel 14 + CMS chains including 50×7 for 2026.)*
-
-2026 modules live under `modules/exploits/probes_2026/` (data-driven CVE/plugin/path probes). Most report **INFO** when a vulnerable component or path exists — not a confirmed shell unless `HIT` with `php_uname` in the response.
+2026 probes: `modules/exploits/probes_2026/`. **HIT** = confirmed shell; **INFO** = component/path found.
 
 List modules: `devxploit --list-exploits all`
 
@@ -177,7 +180,7 @@ cd ~/Desktop/tools/devxploit   # or your clone path
 git pull
 python3 -m pip install -r requirements.txt --break-system-packages
 chmod +x devxploit install.sh
-./devxploit -u https://target.example -x -o ./logs
+./devxploit -u https://target.example -x --hits-only --report ./logs/report.json
 ```
 
 System-wide install:
@@ -203,10 +206,17 @@ usage: devxploit [options]
   -u, --url URL           Target URL
   -x, --exploit-scan      Run Exploits Scan (recommended)
   -e, --exploit           Alias for exploit scan
-  --exploit-cms PACK      Force one pack: intel|wordpress|joomla|prestashop|
-                          drupal|lokomedia|opencart|magento|all
+  --exploit-cms PACK      intel|wordpress|joomla|prestashop|drupal|opencart|
+                          magento|laravel|shopify|moodle|shopware|all
   --list-exploits PACK    Print module catalog
-  -o, --output DIR        Write exploits_*.log files
+  --legacy-only           Classic modules only
+  --2026-only             2026 CVE pack only
+  --hits-only             Hide MISS / low-noise INFO
+  --min-severity LEVEL    info | expose | shell
+  --threads N             Batch parallelism (-i)
+  --proxy URL             HTTP proxy
+  --report FILE.json      Export JSON report (+ .html)
+  -o, --output DIR        Logs directory or report.json path
   --cms                   CMS metadata (themes, plugins, users)
   -w, --web-info          Web recon
   -d, --domain-info       Subdomain enum
@@ -221,11 +231,35 @@ usage: devxploit [options]
 Examples:
 
 ```bash
-devxploit -u https://site.tld -x
-devxploit -u https://site.tld --exploit-cms wordpress -o ./out
-devxploit --list-exploits joomla
-devxploit --it
+devxploit -u https://site.tld -x --hits-only
+devxploit -u https://site.tld -x --report scan.json
+devxploit -u https://site.tld --exploit-cms wordpress --2026-only
+devxploit -i targets.txt --threads 5 -x -o ./batch_logs
+devxploit --list-exploits all
+devxploit --it    # then: scan https://target -x | search CVE-2024
 ```
+
+---
+
+## Publish on GitHub & use on Kali
+
+```bash
+# GitHub (maintainer)
+git clone https://github.com/zado-os/DevXploit.git
+cd DevXploit
+git pull
+
+# Kali users
+sudo apt install python3 python3-pip git -y
+git clone https://github.com/zado-os/DevXploit.git
+cd DevXploit
+python3 -m pip install -r requirements.txt --break-system-packages
+chmod +x devxploit install.sh
+sudo ./install.sh
+devxploit -u https://target.com -x --report /root/report.json
+```
+
+Share repo link: **https://github.com/zado-os/DevXploit**
 
 ---
 

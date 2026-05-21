@@ -13,6 +13,10 @@ from modules.executor.Drupal import Drupal
 from modules.executor.Joomla import Joomla
 from modules.executor.Uknown import Uknown
 from modules.executor.Opencart import Opencart
+from modules.executor.Framework import Framework
+from common.cms_detect import detect_cms_scored, CLASS_MAP
+from common.waf_detect import detect_waf
+from common.report_export import reset_report, get_report
 
 import re
 import requests
@@ -47,8 +51,9 @@ class CMS(object):
         self.cmsinfo = cmsinfo
         self.dnsdump = dnsdump
         self.port = port
+        self._cms_key = None
+        self._cms_confidence = 0
 
-    
     def __fetch__(self, target_url, default=''):
         try:
             return requests.get(
@@ -98,41 +103,26 @@ class CMS(object):
             return self.port
 
     def detect(self):
-        """
-        this module to detect cms & return type of cms.
-        & make instance of cms.
-        """
-        if re.search(re.compile(r'<script type=\"text/javascript\" src=\"/media/system/js/mootools.js\"></script>|/media/system/js/|com_content|Joomla!'), self.__getcontent__()):
-            name = 'Joomla'
-            return name
-        
-        elif re.search(re.compile(r'wp-content|wordpress|xmlrpc.php'), self.__getcontent__()):
-            name = 'Wordpress'
-            return name
-        elif re.search(re.compile(r'Drupal|drupal|sites/all|drupal.org'), self.__getcontent__()):
-            name = 'Drupal'
-            return name
-
-        elif re.search(re.compile(r'Prestashop|prestashop'), self.__getcontent__()):
-            name = 'Prestashop'
-            return name
-        elif re.search(re.compile(r'route=product|OpenCart|route=common|catalog/view/theme'), self.__getcontent__()):
-            name = 'Opencart'
-            return name
-
-        elif re.search(re.compile(r'Log into Magento Admin Page|name=\"dummy\" id=\"dummy\"|Magento'), self.__getcontent__()):
-            name = 'Magento'
-            return name
-        elif re.search(re.compile(r'image/gif'), self.__getlmcontent__()):
-            name = 'Lokomedia'
-            return name
-
-        elif re.search(re.compile(r'lokomedia'), self.__getlm2content__()):
-            name = 'Lokomedia2'
-            return name
+        """Multi-signal CMS detection with confidence score."""
+        html = self.__getcontent__()
+        try:
+            lm = self.__getlmcontent__()
+            if lm:
+                html += lm
+        except Exception:
+            pass
+        display, confidence, ranked = detect_cms_scored(
+            self.url, self.headers, extra_html=html
+        )
+        self._cms_confidence = confidence
+        if ranked:
+            self._cms_key = ranked[0][0]
         else:
-            name = 'Unknown'
-            return name
+            self._cms_key = "unknown"
+        if display == "Unknown" and re.search(r"lokomedia", self.__getlm2content__() or "", re.I):
+            self._cms_key = "lokomedia2"
+            display = "Lokomedia2"
+        return display
 
     def serialize(self):
         result = dict(
@@ -155,6 +145,9 @@ class CMS(object):
                 name = CMS_CLASS_NAMES.get(key)
                 if name:
                     detected_name = name
+        fw_keys = ("laravel", "shopify", "moodle", "shopware")
+        if self._cms_key in fw_keys or (detected_name or "").lower() in fw_keys:
+            return Framework
         try:
             return globals()[detected_name]
         except KeyError:
@@ -175,17 +168,32 @@ class CMS(object):
 
     def instanciate(self):
         init_time = time.time()
+        reset_report(self.url)
         cms = self.serialize()
         if cms['name']:
             cms_class = self._resolve_cms_class(cms['name'])
-            instance = cms_class(self.url, self.headers)
+            if cms_class is Framework:
+                instance = cms_class(
+                    self.url, self.headers, fw_type=self._cms_key or "laravel"
+                )
+            else:
+                instance = cms_class(self.url, self.headers)
             display_cms = cms_class.__name__
+            if cms_class is Framework:
+                display_cms = (self._cms_key or "framework").capitalize()
             if self.force_cms:
                 display_cms += ' [exploit: %s]' % self.force_cms
+            waf = detect_waf(self.url, self.headers)
+            get_report().set_meta(
+                cms=display_cms, confidence=self._cms_confidence, waf=waf
+            )
             print ('\n {0}[{1}Target{2}]{3} => {4}{5} \n '.format(B,W,B, W, self.url, end))
             print ("{0} −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−".format(W))
             print (' {0} looking for cms' .format(run))
-            print (' {0} CMS : {1}' .format(good , display_cms))
+            print (' {0} CMS : {1} ({2}% confidence)' .format(
+                good, display_cms, self._cms_confidence))
+            if waf:
+                print (' {0} WAF/CDN : {1}' .format(info, ", ".join(waf)))
             if cms['exploit']:
                 self._run_exploit_scan(cms['name'], instance)
             if cms['webinfo']:
@@ -210,3 +218,11 @@ class CMS(object):
         end_time = time.time()
         elapsed_time = end_time - init_time
         print('\n %s[%s Elapsed Time %s]%s => %.2f seconds ' % (Y,W,Y,W,elapsed_time))
+        from common.scan_options import ScanOptions
+        opts = ScanOptions.get()
+        if opts.report_path:
+            path = opts.report_path
+            get_report().write_json(path)
+            if path.endswith(".json"):
+                get_report().write_html(path.replace(".json", ".html"))
+            print(' {0} Report saved: {1}'.format(good, path))
