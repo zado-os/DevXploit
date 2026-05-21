@@ -1,3 +1,6 @@
+#### v4.2.3 — Contact Form 7 CVE-2020-35489 exploit chain
+- Real CF7 upload attempt: version check, form discovery, filename bypass, shell verify
+
 #### v4.2.1 — Repo cleanup
 - Removed `CONTRIBUTORS.md`; maintainer credit only in README
 
