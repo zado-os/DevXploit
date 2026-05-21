@@ -1,14 +1,14 @@
 <p align="center">
   <a href="https://github.com/zado-os/devxploit"><img src="https://i.ibb.co/ZxxFqxQ/vxv2.png" alt="DevXploit"></a>
   <br>
-  <strong>DevXploit v4.2.1</strong> — ZADO-OS Roger OS Edition
+  <strong>DevXploit v4.2.2</strong> — ZADO-OS Roger OS Edition
   <br>
   <sub>588 modules · CVE match · Nuclei · WPScan · SQLi/XSS · PDF reports</sub>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/version-4.2.1-red?style=flat-square" alt="version">
+  <img src="https://img.shields.io/badge/version-4.2.2-red?style=flat-square" alt="version">
   <img src="https://img.shields.io/badge/Modules-588+-red?style=flat-square" alt="modules">
   <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=flat-square" alt="license">
   <a href="https://github.com/zado-os/devxploit">
@@ -31,6 +31,15 @@
 | **Author** | Hussain Al-zadjali — **[@zado-os](https://github.com/zado-os)** |
 | **Project** | ZADO-OS Roger OS Edition |
 | **Upstream** | [anouarbensaad/vulnx](https://github.com/anouarbensaad/vulnx) |
+
+### If @cursoragent appears on GitHub
+
+Git history has **only** `zado-os` — not Cursor. If the site still shows 2 contributors:
+
+1. **Cursor** → Settings → Git → turn off **co-author / Include Cursor in commits**.
+2. **GitHub** → repo **Settings** → **Collaborators** → remove `cursoragent` if listed.
+3. Hard-refresh the repo page (Ctrl+F5). Official API lists only [@zado-os](https://github.com/zado-os).
+4. After `git pull`, enable hooks: `git config core.hooksPath .githooks` (strips Cursor co-author from new commits).
 
 ---
 

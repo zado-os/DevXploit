@@ -1,0 +1,9 @@
+#!/bin/sh
+# Strip Cursor Agent co-author trailers — keeps GitHub Contributors to zado-os only.
+COMMIT_MSG_FILE="$1"
+if [ -f "$COMMIT_MSG_FILE" ]; then
+  sed -i.bak '/Co-authored-by:.*[Cc]ursor/d' "$COMMIT_MSG_FILE" 2>/dev/null || \
+  sed -i '' '/Co-authored-by:.*[Cc]ursor/d' "$COMMIT_MSG_FILE" 2>/dev/null || true
+  rm -f "${COMMIT_MSG_FILE}.bak" 2>/dev/null || true
+fi
+exit 0

@@ -13,7 +13,15 @@ banner() {
     echo -e "===== DevXploit INSTALL — ZADO-OS Roger OS ====="
 }
 
+setup_git_hooks() {
+    if [ -d ".githooks" ]; then
+        git config core.hooksPath .githooks 2>/dev/null || true
+        chmod +x .githooks/prepare-commit-msg 2>/dev/null || true
+    fi
+}
+
 install_portable() {
+    setup_git_hooks
     echo -e "$red [$green+$red]$off Use: chmod +x devxploit && ./devxploit -u URL -x"
     echo -e "$red [$green+$red]$off Or: python3 devxploit.py -u URL -x"
 }
@@ -69,6 +77,7 @@ EOF
     elif [ -f bin/nexploiticon.png ]; then
         cp bin/nexploiticon.png /usr/share/icons/devxploiticon.png 2>/dev/null || true
     fi
+    setup_git_hooks
     echo -e "$green[+]$off Installed. Run: devxploit -u https://target.com -x"
     devxploit --help 2>/dev/null || python3 devxploit.py --help
 }

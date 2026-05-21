@@ -1,0 +1,10 @@
+---
+description: Git commits must not add Cursor or AI co-authors
+alwaysApply: true
+---
+
+# Git commits for DevXploit
+
+- Never add `Co-authored-by: Cursor Agent` or any AI co-author trailer to commits.
+- Commits must be attributed only to the project maintainer (zado-os).
+- Do not push commits on behalf of cursoragent.
