@@ -54,6 +54,7 @@ chmod +x devxploit install.sh
 | Exploit scan | `-x` | 588 modules, `[n/t]` progress |
 | **Full power** | `--full` | CVE + SQLi/XSS + WPScan + Nuclei + MSF + PDF + rate-limit + double-verify |
 | CVE auto-match | `-x` or `--cve-match` | Plugin `readme.txt` version vs `data/cve_db.json` + CVSS |
+| CF7 exploit | module #23 | **CVE-2020-35489** upload bypass if version ≤5.3.1 + file form |
 | Double shell verify | `-x` or `--double-verify` | Two GET checks before **HIT** |
 | Rate-limit / WAF | `-x` or `--rate-limit` | Delay + User-Agent rotation |
 | SQLi / XSS | `-x` or `--sqli-xss` | Reflection probes on common params |
