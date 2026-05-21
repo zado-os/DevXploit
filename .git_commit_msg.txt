@@ -1,5 +1,5 @@
-v4.0.0: full platform — 588 modules, reports, WAF, batch, frameworks
+v4.0.1: fix false HIT, modern banner, scan progress
 
-- JSON/HTML reports, hits-only, legacy/2026 filters, threads, proxy
-- CMS confidence + WAF; Laravel/Shopify/Moodle/Shopware packs
-- PrestaShop strict verify; interactive search/scan
+- Strict plugin readme checks; INFO not SHELL for Elementor/plugins
+- Infer hit_type; hosting 404 filter; default 12s HTTP timeout
+- New boxed banner; live progress bar with --hits-only

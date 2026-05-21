@@ -1,3 +1,8 @@
+#### v4.0.1 — Accuracy & banner
+- Fix false HIT on plugin paths (Elementor, WP extras) — strict readme + INFO tag
+- Reject hosting soft-404; infer hit_type from URL; live progress with `--hits-only`
+- Modern boxed terminal banner
+
 #### v4.0.0 — Full platform release (GitHub / Kali)
 - 588 modules: legacy + 2026×7 + Laravel/Shopify/Moodle/Shopware (30 each)
 - CMS confidence %, WAF detection, JSON/HTML reports

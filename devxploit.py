@@ -15,10 +15,13 @@ try:
     from modules.cli.cli import CLI
 except ImportError:
     CLI = None
+from common.req_patch import apply_request_timeout
 from common.colors import red, green, G, R, W, good, bad, run
 from common.requestUp import random_UserAgent
 from common.banner import banner
 from common.scan_options import ScanOptions
+
+apply_request_timeout()
 
 import sys
 import argparse
