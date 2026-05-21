@@ -144,7 +144,7 @@ sequenceDiagram
 | Exploits Scan | **119** modules across 8 packs (incl. intel + WP extras) |
 | Intel pack | `.git`, `.env`, phpinfo, wp-config backups, XML-RPC, Timthumb, PHPUnit, Adminer, phpMyAdmin, SQL dumps, Swagger, Spring Actuator, debug logs, WP REST users |
 | Shell payloads | `shell/DevXploit.php` (+ html/txt/gif) — query `?DevXploit=1` |
-| Output | `[n/total]` lines, `HIT` / `MISS` markers, `-o` log export |
+| Output | `HIT` = verified shell body, `EXPOSE` = backup leak, `INFO` = panel/API, `MISS` = not vulnerable; `-o` logs |
 | Recon | Dorks, DNS dump, port scan, subdomain/web gathering |
 | Interactive | `devxploit --it` console (readline on Linux) |
 
